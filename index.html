@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Modelling, Data & AI Systems Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric: #ffa726;
+            --deep-blue: #1a1a2e;
+            --slate: #16213e;
+            --ice: #eef1f5;
+            --accent: #ff6b9d;
+            --warm: #ffcc80;
+            --grid-size: 40px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--deep-blue);
+            color: var(--ice);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255, 167, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255, 167, 38, 0.03) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            margin-bottom: 100px;
+            position: relative;
+            animation: glitchIn 0.8s ease-out;
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 50px;
+            height: auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes glitchIn {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-20px);
+                text-shadow: -5px 0 0 var(--electric), 5px 0 0 var(--accent);
+            }
+            20% {
+                text-shadow: -5px 0 0 var(--electric), 5px 0 0 var(--accent);
+            }
+            40%, 100% { 
+                opacity: 1; 
+                transform: translateX(0);
+                text-shadow: none;
+            }
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--slate);
+            color: var(--electric);
+            padding: 8px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--electric);
+            text-transform: uppercase;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--ice) 0%, var(--warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            color: rgba(238, 241, 245, 0.8);
+            max-width: 850px;
+            font-weight: 300;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+        
+        section {
+            margin-bottom: 90px;
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, var(--electric) 50%, transparent 100%);
+            opacity: 0;
+            animation: lineGrow 0.8s ease-out forwards;
+        }
+        
+        section:nth-child(odd)::before { animation-delay: 0.2s; }
+        section:nth-child(even)::before { animation-delay: 0.4s; }
+        
+        @keyframes lineGrow {
+            from { height: 0; opacity: 0; }
+            to { height: 100%; opacity: 0.3; }
+        }
+        
+        h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 35px;
+            color: var(--ice);
+            position: relative;
+        }
+        
+        .description {
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            color: rgba(238, 241, 245, 0.9);
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            padding: 18px 25px;
+            margin: 12px 0;
+            background: rgba(22, 33, 62, 0.5);
+            border-left: 3px solid var(--slate);
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+        
+        li:hover {
+            border-left-color: var(--electric);
+            background: rgba(22, 33, 62, 0.8);
+            transform: translateX(10px);
+            z-index: 50;
+        }
+        
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            display: block;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            background: var(--slate);
+            color: var(--ice);
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            z-index: 100;
+            border: 1px solid var(--electric);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            font-weight: 400;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .tooltip .tooltip-text::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 20px;
+            border: 6px solid transparent;
+            border-bottom-color: var(--electric);
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        strong {
+            color: var(--electric);
+            font-weight: 600;
+        }
+        
+        .info-panel {
+            background: linear-gradient(135deg, var(--slate) 0%, rgba(22, 33, 62, 0.8) 100%);
+            padding: 35px;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-panel::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 167, 38, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .info-panel > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-panel p {
+            margin: 12px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+        }
+        
+        a {
+            color: var(--electric);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--electric);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--warm);
+        }
+        
+        a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+            background: var(--warm);
+        }
+        
+        .resources-section {
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1) 0%, rgba(255, 107, 157, 0.1) 100%);
+            padding: 50px;
+            border: 2px solid var(--slate);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resources-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 167, 38, 0.03) 10px, rgba(255, 167, 38, 0.03) 20px);
+            pointer-events: none;
+        }
+        
+        .resources-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .code-block {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 20px 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--electric);
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        
+        footer {
+            background: linear-gradient(135deg, var(--slate) 0%, rgba(10, 15, 25, 0.95) 100%);
+            border-top: 2px solid var(--electric);
+            margin-top: 100px;
+            padding: 60px 0 30px 0;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 167, 38, 0.02) 10px, rgba(255, 167, 38, 0.02) 20px);
+            pointer-events: none;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-content {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--electric);
+            margin-bottom: 25px;
+        }
+        
+        .footer-location {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(238, 241, 245, 0.9);
+            margin-bottom: 20px;
+        }
+        
+        .footer-location strong {
+            color: var(--electric);
+            font-weight: 600;
+        }
+        
+        .footer-email {
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+        
+        .footer-email a {
+            color: var(--electric);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-email a:hover {
+            color: var(--warm);
+        }
+        
+        .footer-links {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 167, 38, 0.2);
+            border-bottom: 1px solid rgba(255, 167, 38, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: rgba(238, 241, 245, 0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            margin: 0 15px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--electric);
+        }
+        
+        .footer-links .divider {
+            color: rgba(255, 167, 38, 0.3);
+            margin: 0 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: rgba(238, 241, 245, 0.6);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 60px 25px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            section::before {
+                display: none;
+            }
+            
+            .logo {
+                width: 40px;
+            }
+            
+            .footer-container {
+                padding: 0 25px;
+            }
+            
+            .footer-content h3 {
+                font-size: 1.5rem;
+            }
+            
+            .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-links .divider {
+                display: none;
+            }
+            
+            .footer-links a {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <img src="logo.png" alt="Environmental Modelling, Data & AI Systems Group Logo" class="logo">
+                <div class="tag">Research Group</div>
+            </div>
+            <h1>Environmental Modelling, Data & AI Systems Group</h1>
+            <p class="subtitle">A shared umbrella for environmental modelling, data science, and AI/LLM-enabled systems — with a strong emphasis on teaching, training, and reproducible research.</p>
+        </header>
+        
+        <section>
+            <h2>Remit & Themes</h2>
+            <p class="description">We bring together staff and students working across:</p>
+            <ul>
+                <li class="tooltip">
+                    <strong>Environmental modelling</strong> (process-based, statistical, hybrid)
+                    <span class="tooltip-text">Building and applying models to understand environmental systems, from physics-based simulations to data-driven approaches</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Data science & analytics</strong> (methods, workflows, reproducibility)
+                    <span class="tooltip-text">Developing robust analytical pipelines and methods for processing, analyzing, and visualizing environmental data</span>
+                </li>
+                <li class="tooltip">
+                    <strong>AI & LLM-enabled systems</strong> (tools for analysis, synthesis, decision support)
+                    <span class="tooltip-text">Leveraging large language models and AI tools to accelerate research, synthesize information, and support decision-making</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Data/AI systems</strong> (pipelines, evaluation, infrastructure, open resources)
+                    <span class="tooltip-text">Building the technical infrastructure and evaluation frameworks needed for reliable data and AI workflows</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Teaching & training</strong> (courses, short workshops, skills development)
+                    <span class="tooltip-text">Sharing knowledge and building capacity through courses, workshops, and hands-on training programs</span>
+                </li>
+            </ul>
+            
+            <p class="description" style="margin-top: 50px; margin-bottom: 20px;">Our research focuses on:</p>
+            <ul>
+                <li class="tooltip">
+                    <strong>Models & inference:</strong> calibration, uncertainty, emulation, scenarios
+                    <span class="tooltip-text">Improving how we fit models to data, quantify uncertainty, and use models for prediction and scenario analysis</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Data & methods:</strong> QA/QC, integration, spatiotemporal methods
+                    <span class="tooltip-text">Ensuring data quality, combining diverse data sources, and developing methods for spatial and temporal analysis</span>
+                </li>
+                <li class="tooltip">
+                    <strong>AI systems:</strong> LLM tooling, retrieval, evaluation, human-in-the-loop workflows
+                    <span class="tooltip-text">Creating practical AI systems that combine language models with domain expertise and human oversight</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Open research:</strong> reusable code, transparent methods, collaborative practice
+                    <span class="tooltip-text">Promoting transparency and reproducibility through open-source code, clear documentation, and collaborative approaches</span>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>People</h2>
+            <p class="description">See: <a href="people.html">People</a></p>
+        </section>
+        
+        <section>
+            <h2>Seminars & Events</h2>
+            <div class="info-panel">
+                <p><strong>Seminar series:</strong> TBC</p>
+                <p><strong>Next session:</strong> TBC</p>
+            </div>
+        </section>
+        
+        <section>
+            <h2>Teaching & Training</h2>
+            <ul>
+                <li>Training materials: <a href="#">(link to repo when created)</a></li>
+                <li>Reading list: <a href="#">(link)</a></li>
+            </ul>
+        </section>
+        
+        <section class="resources-section">
+            <h2>Projects & Resources</h2>
+            <div class="code-block">
+                <span style="color: var(--electric);">GitHub organisation:</span> <a href="https://github.com/environmental-ai-systems" target="_blank">https://github.com/environmental-ai-systems</a>
+            </div>
+            <p style="margin-top: 30px; margin-bottom: 15px; font-weight: 500;">Example repositories:</p>
+            <ul>
+                <li>(add repo) — one-line description</li>
+                <li>(add repo) — one-line description</li>
+            </ul>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <h3>Contact Us</h3>
+                <p class="footer-location">
+                    <strong>Department of Earth and Environmental Sciences</strong><br>
+                    The University of Manchester<br>
+                    Manchester, United Kingdom
+                </p>
+                <p class="footer-email">
+                    Email: <a href="mailto:contact@example.ac.uk">contact@example.ac.uk</a>
+                </p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/environmental-ai-systems" target="_blank">GitHub</a>
+                <span class="divider">•</span>
+                <a href="https://www.manchester.ac.uk/discover/maps/" target="_blank">Campus Map</a>
+                <span class="divider">•</span>
+                <a href="https://www.ess.manchester.ac.uk" target="_blank">Department Website</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Environmental Modelling, Data & AI Systems Group</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
