@@ -56,9 +56,30 @@ jobs:
       run: |
         if [ -f _data/events.yml ]; then
           python generate_events_section.py
-          # Inject events into index.html
+          # Inject events into index.html using a different approach
           if [ -f events_section.html ]; then
-            sed -i '/<div id="events-container">/,/<\/div>/c\<div id="events-container">\n'"$(cat events_section.html)"'\n</div>' index.html
+            python << 'PYTHON_SCRIPT'
+import re
+
+# Read the generated events HTML
+with open('events_section.html', 'r') as f:
+    events_html = f.read()
+
+# Read index.html
+with open('index.html', 'r') as f:
+    index_html = f.read()
+
+# Replace the events container content
+pattern = r'<div id="events-container">.*?</div>'
+replacement = f'<div id="events-container">\n{events_html}\n            </div>'
+new_html = re.sub(pattern, replacement, index_html, flags=re.DOTALL)
+
+# Write back to index.html
+with open('index.html', 'w') as f:
+    f.write(new_html)
+
+print("Injected events into index.html")
+PYTHON_SCRIPT
           fi
         fi
     
