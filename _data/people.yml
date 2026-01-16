@@ -1,0 +1,130 @@
+academics:
+- name: Zhonghua Zheng
+  role: Permanent Lecturer (Tenured Assistant Professor)
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: 'Personal webpage: https://zhonghuazheng.com/'
+  photo: https://zhonghuazheng.com/src/selfie.jpg
+- name: Matthew Thomas
+  role: Lecturer in Data Science and Analytics
+  affiliation: (i) Department of Earth and Environmental Sciences, University of Manchester and (ii) National Centre for Atmospheric Sciences (NCAS), University of Manchester
+  contact: matthew.l.thomas@manchester.ac.uk
+  bio: I am currently a Lecturer in Data Science and Analytics in the Department of Earth and Environmental Sciences at the University of Manchester, which is a joint position with the National Centre for Atmospheric Sciences (NCAS).
+  interests: I specialise in Bayesian hierarchical modelling, Bayesian computation and spatial/spatio-temporal statistics with applications in estimating exposures to environmental hazards, epidemiology and public health.
+  hobby: TV and Film
+  photo: https://www.dropbox.com/scl/fi/lcuqaymousm0yadxnspt3/IMG_9596-copy.JPG?rlkey=vpc46mzakxm492ibju3rfxbfl&dl=0
+  bonus: 'Personal webpage: matthewllthomas.github.io'
+- name: David Topping
+  role: Professor in Digital Environment
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: david.topping@manchester.ac.uk
+  bio: An unapologetic digital enthusiast; Originally trained as a physicist before completing a PhD in aerosol thermodynamics at UMIST, I have spent over two decades in the digital environment space.
+  interests: My core area of research includes numerical/model representations of atmospheric aerosol particles, from phase seperation to aerosol-cloud activation. I also work in a number of specialised areas including bio-aerosol detection and chemo-informatics developent. More recently my work includes how integration of AI within data platforms can aid with search and discovery across environmental science.
+  hobby: Gamer and keen collector. I enjoy tinkering with any new computational tools as much as I do trying my hand at woodworking.
+  tools: Keras and the general Python ecosystem along with the OpenAI stack!
+students:
+- name: Full name
+  role: Title/role (e.g., PhD Candidate, Postdoc, Research Assistant)
+  affiliation: Affiliation (department, university)
+  contact: Contact info (email, optional links to GitHub, LinkedIn, personal site, etc.)
+  bio: Short bio (~2–3 sentences)
+  interests: Research interests (~4 sentences)
+  hobby: A fun fact or hobby (e.g., "Gamer" or "conquers mountains")
+  tools: Favorite dataset or data tool (optional)
+  photo: Photo (clear, friendly, professional-looking photo - optional)
+  bonus: 'Bonus (optional): a quote, motto, or “ask me about” topics you''d like listed.'
+- name: Junjie Yu
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: 'junjie.yu@postgrad.manchester.ac.uk; Github: https://github.com/JunjieYU-UoM; Personal site: https://junjieyu-uom.github.io/; Linkin: Junjie Yu'
+  bio: I am currently pursuing my PhD at the Department of Earth and Environmental Sciences, under the supervision of Dr. Zhonghua Zheng and Prof. David Topping. I earned my Master’s degree in Environmental Engineering (2023) Research Center for Eco-Environmental Sciences (RCEES), Chinese Academy of Sciences (CAS) (one of the top research units for ecology and environmental sciences) and my B.Eng. in Environmental Engineering (2020) from China University of Mining and Technology-Beijing (CUMTB, China).
+  interests: My research focuses on applying statistics, reinforcement learning/optimization, and data-driven modeling to solve environmental problems, including intelligent urban adaptation, urban climate modeling, climate downscaling, and public health. I am currently developing a universal urban climate model interface, coupling machine learning with urban climate model to create intelligent and scalable climate adaptation technologies/engineering, and exploring the impact of urban extreme climate on public health. If you are interested in the topics above and would like to engage in a discussion, please feel free to reach out to me.
+  hobby: Chinese chess, swimming
+  tools: UKCP; CESM-LENS; ERA5; CESM; CLMU
+  photo: https://junjieyu-uom.github.io/images/aca-homepage-junjie.jpg
+- name: Fei Jiang
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: 'Email: fei.jiang-4@postgrad.manchester.ac.uk; Github: https://github.com/FeiJiang-UoM; Personal site: https://feijiang-uom.github.io/; Linkedln: Fei Jiang'
+  bio: I am currently pursuing a PhD in the Department of Earth and Environmental Sciences at The University of Manchester, UK, under the supervision of Dr. Zhonghua Zheng (Assistant Professor in Data Science & Environmental Analytics), Chair Professor David Topping (Professor of Digital Environment, Fellow of the Alan Turing Institute), and Chair Professor Hugh Coe (Professor of Atmospheric Composition). I obtained my master’s degree from the University of Melbourne and my bachelor’s degree from Shandong University. My research focuses on particle-resolved aerosol dynamic modeling, cloud parcel modeling, and the application of machine learning to study aerosol mixing states, black carbon, micro/nanoplastics, and cloud–aerosol interactions.
+  interests: My research interests encompass the development and application of advanced modeling and data-driven approaches to address key challenges in atmospheric science. Specifically, I focus on particle-resolved aerosol dynamic modeling to capture the detailed evolution of aerosol populations, cloud parcel modeling to investigate aerosol–cloud interactions, and the integration of machine learning techniques to enhance the prediction and understanding of complex atmospheric processes. I am particularly interested in exploring aerosol mixing states, the environmental behavior and impacts of micro/nanoplastic pollutants and black carbon (BC), and their roles in cloud microphysics and climate interactions.
+  hobby: Computer games (e.g. GTA V and Civilization VI), Basketball
+  tools: Aeronet; CESM; CAMS; ERA5
+  photo: https://drive.google.com/drive/folders/1-D3UOs-hokDaBMq4XbuQcQeix-GfEn0i
+- name: Yuan Sun
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: yuan.sun@manchester.ac.uk
+  bio: I am a Phd student under the supervision of Dr. Zhonghua Zheng, Prof. David Topping, and Prof. David Schultz.
+  hobby: TV drama
+  tools: CESM ensemble
+  photo: https://github.com/YuanSun-UoM/yuansun-uom.github.io/blob/main/images/portrait.jpg
+  bonus: 'Personal webpage: https://yuansun-uom.github.io/'
+- name: Zhiyi Song
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: 'Email: zhiyi.song@postgrad.manchester.ac.uk.  Github: https://github.com/onebravekid'
+  bio: I am a PhD student under the supervision of Dr. Zhonghua Zheng, Prof. David Topping, and Dr. James Allan, and hold an MSc degree in Pollution and Environmental Control from the University of Manchester. Prior to that, I obtained a dual Bachelor's degree in Environmental Engineering (BEng) and English Language and Literature (BA) from Inner Mongolia Agricultural University.
+  interests: My research interests include air pollution, multi-scale simulations, and regional/global atmospheric modelling. I am interested in understanding how atmospheric chemistry, aerosols, and climate interact across different spatial and temporal scales. My current work focuses on using the MUSICA framework to explore the impacts of emission sources, such as biomass burning, on air quality and climate. Through this, I aim to improve our ability to simulate atmospheric processes and assess their implications for the environment and human health.
+  hobby: Snowboarding, hiking
+  tools: MUSICA, CESM, WRF
+  photo: https://drive.google.com/drive/folders/1-D3UOs-hokDaBMq4XbuQcQeix-GfEn0i
+  bonus: Motto:Hi, just trying to be brave.
+- name: Jiyang Xia
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: 'Email: jiyang.xia@manchester.ac.uk; Github: https://github.com/Jiyang-Xia; Personal site: https://jiyang-xia.github.io'
+  bio: I am a PhD candidate in the Department of Earth and Environmental Sciences at the University of Manchester, supervised by Dr. Zhonghua Zheng and Prof. David Topping. I hold a Master’s degree and a Bachelor’s degree in Urban Planning, awarded by Zhejiang University and Southwest Jiaotong University respectively.
+  interests: My expertise lies in urban climate modeling, sustainable urban environments, and data-informed urban planning. My PhD research focuses on leveraging artificial intelligence to address urban climate challenges, including capturing dynamic interactions between urban form and the atmosphere, advancing models of urban surface characteristics, and exploring generative approaches for urban climate adaptation.
+  hobby: Video games, Hiking
+  tools: ERA5, GEE
+  photo: https://drive.google.com/file/d/1udfJ9t-xfgaJNwXt_oMJPRJZASTl2KNr/view?usp=drive_link
+- name: Ke Liu
+  role: MPhil Student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: ke.liu-13@postgrad.manchester.ac.uk
+  interests: My work focuses on using data-driven methods and climate models to study urban climate
+  hobby: Five trips to London for one musical and worth it.
+- name: Ximeng Kang
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: ximeng.kang@postgrad.manchester.ac.uk
+  bio: I am a PhD candidate supervised by Prof. David Topping in the Department of Earth and Environmental Sciences, and Prof. Alistair Revell, Dr. Saleh Rezaeiravesh, and Dr. Ben Parslew in the Department of Mechanical, Aerospace and Civil Engineering. I hold a Master’s degree from Central South University and a Bachelor’s degree from Jilin University.
+  interests: My research focuses on improving the understanding of the urban canyon environment under varying atmospheric stability conditions from a fluid dynamics perspective. Specifically, I investigate the changing patterns of air exchange rates and the temporal evolution of pattern transitions in urban canyons. I also work on predicting the diurnal air exchange rate using a multifidelity modeling approach.
+  hobby: I enjoy cycling, swimming, and traveling.
+  tools: CFD
+- name: Yuchen Zeng
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: yuchen.zeng@postgrad.manchester.ac.uk
+  bio: I am currently pursuing my PhD at the Department of Earth and Environmental Sciences, under the supervision of Prof. David Topping, Dr. Zhonghua Zheng, Prof Hugh Coe and Prof James Evans. I earned my Master’s degree in Environmental EngineeringTraffic Planning and Management from South China University of Technology and my B.Eng. in Civil Engineering from Hunan University.
+  interests: My research focuses on the traffic emission and the influence from the electrification of vehicles, with the method of data-driving modelling and network optimization. I am currently working on weather normalization based on traffic and pollutant concentration prediction based on traffic simulation. If you are interested in the topics above and would like to engage in a discussion, please feel free to reach out to me.
+  hobby: badminton, ice-skating, instrument
+  tools: ERA5,  (ITS) C2, openstreetmap, DfT
+  photo: https://drive.google.com/file/d/1hSvwecJqa9P9CzETeOeuqSAsGV5UEEcE/view?usp=sharing
+- name: Lauren Stella
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: 'lauren.stella@manchester.ac.uk; LinkedIn: www.linkedin.com/in/lauren-stella-9a776a205'
+  bio: My PhD is the acculmination of my two passions for Data Science (MSc) and Environmental Science (BSc). Under the supervision of Dr. Matthew Thomas and Prof. David Topping, I am pioneering the use of Bayesian deep learning in the field of atmospheric pollution prediction.
+  interests: My research focuses on applying data science and modeling techniques to atmospheric data in order to extract meaningful insights and forecast future trends. I am particularly interested in enhancing the interpretability of model predictions by quantifying uncertainty, which is crucial for informed decision making. My work aims to bridge the gap between advanced statistical modeling and scalable neural networks.
+  hobby: Bouldering, crocheting, and anything food!
+  photo: https://drive.google.com/file/d/1uFC-pxYVXl70FVmeX4zXIU7CNqfRkjpv/view?usp=drive_link
+- name: Samuel Hyman
+  role: PhD student
+  affiliation: Department of Earth and Environmental Sciences, The University of Manchester
+  contact: samuel.hyman@postgrad.manchester.ac.uk
+  bio: I am a multidisciplinary PhD reseacher interested in air pollution and the effects on health. I hold an MSc in Environmental Chemustry, Toxicology and Health, and a BSc in Molecular Biology. I am supervised by Prof. David Topping and Dr Matthew Thomas.
+  interests: I am interested in environmental exposures in cities and effects on human health. My research focuses on epidemiology or toxicology.
+  hobby: I am a stand-up-paddleboarder with expert balancing skills.
+  tools: Large health datasets (primary care)
+  photo: https://github.com/SamuelJHyman?tab=following
+researchers:
+- name: Congbo Song
+  role: Research Scientist
+  affiliation: National Centre for Atmospheric Science
+  contact: congbo.song@manchester.ac.uk
+  bio: Research Scientist in Data Science and Analytics in Atmospheric Air Pollution, at The National Centre for Atmospheric Science (NCAS) based in the Department of Earth and Environmental Science, the University of Manchester.
+  interests: Understand impacts of source-specific air pollution on human health and climate through advanced receptor modelling. Understanding environmental policies, environmental drivers and atmospheric processes controlling the air we breath using data-driven models such as machine learning and casual inference techniques.
+  hobby: Film
+  tools: AURN air quality dataset, Single particle mass spectrometer dataset, Near-Real Time Traffic data.
+  photo: https://congbo.site/static/img/bio.jpg
