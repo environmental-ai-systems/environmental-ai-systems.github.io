@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Modelling, Data & AI Systems Group</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --electric: #ffa726;
+            --deep-blue: #1a1a2e;
+            --slate: #16213e;
+            --ice: #eef1f5;
+            --accent: #ff6b9d;
+            --warm: #ffcc80;
+            --grid-size: 40px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--deep-blue);
+            color: var(--ice);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255, 167, 38, 0.03) 1px, transparent 1px),
+                linear-gradient(rgba(255, 167, 38, 0.03) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(22, 33, 62, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--electric);
+            z-index: 1000;
+            padding: 15px 0;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .nav-logo img {
+            width: 35px;
+            height: auto;
+        }
+        
+        .nav-logo-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--electric);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: rgba(238, 241, 245, 0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--electric);
+            background: rgba(255, 167, 38, 0.1);
+        }
+        
+        .nav-links a.active {
+            color: var(--electric);
+            background: rgba(255, 167, 38, 0.15);
+        }
+        
+        /* Mobile menu toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--electric);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Events Section Styles */
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .events-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .events-list::-webkit-scrollbar-track {
+            background: var(--slate);
+            border-radius: 4px;
+        }
+        
+        .events-list::-webkit-scrollbar-thumb {
+            background: var(--electric);
+            border-radius: 4px;
+        }
+        
+        .events-list::-webkit-scrollbar-thumb:hover {
+            background: var(--warm);
+        }
+        
+        .event-card {
+            background: rgba(22, 33, 62, 0.6);
+            padding: 25px;
+            border-left: 4px solid var(--electric);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .event-card:hover {
+            border-left-color: var(--warm);
+            background: rgba(22, 33, 62, 0.8);
+            transform: translateX(5px);
+        }
+        
+        .event-card.past {
+            opacity: 0.7;
+            border-left-color: var(--slate);
+        }
+        
+        .event-type {
+            display: inline-block;
+            background: var(--electric);
+            color: var(--deep-blue);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--electric);
+            margin-bottom: 12px;
+        }
+        
+        .event-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: rgba(238, 241, 245, 0.8);
+        }
+        
+        .event-speaker,
+        .event-location {
+            font-size: 0.9rem;
+            color: rgba(238, 241, 245, 0.8);
+            margin-bottom: 8px;
+        }
+        
+        .event-description {
+            margin-top: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: rgba(238, 241, 245, 0.9);
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 167, 38, 0.2);
+        }
+        
+        
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 120px 50px 80px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            margin-bottom: 100px;
+            position: relative;
+            animation: glitchIn 0.8s ease-out;
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            width: 50px;
+            height: auto;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes glitchIn {
+            0% { 
+                opacity: 0; 
+                transform: translateX(-20px);
+                text-shadow: -5px 0 0 var(--electric), 5px 0 0 var(--accent);
+            }
+            20% {
+                text-shadow: -5px 0 0 var(--electric), 5px 0 0 var(--accent);
+            }
+            40%, 100% { 
+                opacity: 1; 
+                transform: translateX(0);
+                text-shadow: none;
+            }
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--slate);
+            color: var(--electric);
+            padding: 8px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--electric);
+            text-transform: uppercase;
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-30px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--ice) 0%, var(--warm) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .subtitle {
+            font-size: 1.15rem;
+            color: rgba(238, 241, 245, 0.8);
+            max-width: 850px;
+            font-weight: 300;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+        
+        section {
+            margin-bottom: 90px;
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -50px;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, var(--electric) 50%, transparent 100%);
+            opacity: 0;
+            animation: lineGrow 0.8s ease-out forwards;
+        }
+        
+        section:nth-child(odd)::before { animation-delay: 0.2s; }
+        section:nth-child(even)::before { animation-delay: 0.4s; }
+        
+        @keyframes lineGrow {
+            from { height: 0; opacity: 0; }
+            to { height: 100%; opacity: 0.3; }
+        }
+        
+        h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 35px;
+            color: var(--ice);
+            position: relative;
+        }
+        
+        .description {
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            color: rgba(238, 241, 245, 0.9);
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            padding: 18px 25px;
+            margin: 12px 0;
+            background: rgba(22, 33, 62, 0.5);
+            border-left: 3px solid var(--slate);
+            transition: all 0.3s ease;
+            font-size: 1.05rem;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+        
+        li:hover {
+            border-left-color: var(--electric);
+            background: rgba(22, 33, 62, 0.8);
+            transform: translateX(10px);
+            z-index: 50;
+        }
+        
+        /* Tooltip styles */
+        .tooltip {
+            position: relative;
+            cursor: help;
+            display: block;
+        }
+        
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            margin-top: 10px;
+            background: var(--slate);
+            color: var(--ice);
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            z-index: 100;
+            border: 1px solid var(--electric);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            font-weight: 400;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .tooltip .tooltip-text::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 20px;
+            border: 6px solid transparent;
+            border-bottom-color: var(--electric);
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        strong {
+            color: var(--electric);
+            font-weight: 600;
+        }
+        
+        .info-panel {
+            background: linear-gradient(135deg, var(--slate) 0%, rgba(22, 33, 62, 0.8) 100%);
+            padding: 35px;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+            margin-top: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-panel::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 167, 38, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .info-panel > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .info-panel p {
+            margin: 12px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+        }
+        
+        a {
+            color: var(--electric);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--electric);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--warm);
+        }
+        
+        a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+            background: var(--warm);
+        }
+        
+        .resources-section {
+            background: linear-gradient(135deg, rgba(255, 167, 38, 0.1) 0%, rgba(255, 107, 157, 0.1) 100%);
+            padding: 50px;
+            border: 2px solid var(--slate);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resources-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 167, 38, 0.03) 10px, rgba(255, 167, 38, 0.03) 20px);
+            pointer-events: none;
+        }
+        
+        .resources-section > * {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .code-block {
+            background: rgba(26, 26, 46, 0.8);
+            padding: 20px 25px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            border-left: 3px solid var(--electric);
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        
+        
+        footer {
+            background: linear-gradient(135deg, var(--slate) 0%, rgba(10, 15, 25, 0.95) 100%);
+            border-top: 2px solid var(--electric);
+            margin-top: 100px;
+            padding: 60px 0 30px 0;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255, 167, 38, 0.02) 10px, rgba(255, 167, 38, 0.02) 20px);
+            pointer-events: none;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-content {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .footer-content h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--electric);
+            margin-bottom: 25px;
+        }
+        
+        .footer-location {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: rgba(238, 241, 245, 0.9);
+            margin-bottom: 20px;
+        }
+        
+        .footer-location strong {
+            color: var(--electric);
+            font-weight: 600;
+        }
+        
+        .footer-email {
+            font-size: 1rem;
+            margin-top: 15px;
+        }
+        
+        .footer-email a {
+            color: var(--electric);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-email a:hover {
+            color: var(--warm);
+        }
+        
+        .footer-links {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(255, 167, 38, 0.2);
+            border-bottom: 1px solid rgba(255, 167, 38, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .footer-links a {
+            color: rgba(238, 241, 245, 0.8);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            margin: 0 15px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--electric);
+        }
+        
+        .footer-links .divider {
+            color: rgba(255, 167, 38, 0.3);
+            margin: 0 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+        }
+        
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: rgba(238, 241, 245, 0.6);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 100px 25px 60px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            section::before {
+                display: none;
+            }
+            
+            .logo {
+                width: 40px;
+            }
+            
+            .footer-container {
+                padding: 0 25px;
+            }
+            
+            .footer-content h3 {
+                font-size: 1.5rem;
+            }
+            
+            .footer-links {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .footer-links .divider {
+                display: none;
+            }
+            
+            .footer-links a {
+                margin: 0;
+            }
+            
+            /* Mobile navigation */
+            .nav-container {
+                padding: 0 25px;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--slate);
+                flex-direction: column;
+                gap: 0;
+                padding: 20px;
+                border-top: 1px solid rgba(255, 167, 38, 0.2);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links a {
+                padding: 12px;
+                border-bottom: 1px solid rgba(255, 167, 38, 0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="nav-container">
+            <a href="#top" class="nav-logo">
+                <img src="logo.png" alt="Logo">
+                <span class="nav-logo-text">EMDAI</span>
+            </a>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#top">Home</a></li>
+                <li><a href="#remit">Remit & Themes</a></li>
+                <li><a href="people.html">People</a></li>
+                <li><a href="#teaching">Teaching</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#work-with-us">Work With Us</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header id="top">
+            <div class="header-top">
+                <img src="logo.png" alt="Environmental Modelling, Data & AI Systems Group Logo" class="logo">
+                <div class="tag">Research Group</div>
+            </div>
+            <h1>Environmental Modelling, Data & AI Systems Group</h1>
+            <p class="subtitle">
+                We are a dynamic research group within the Department of Earth and Environmental Sciences at the University of Manchester, 
+                bringing together early-career researchers through to senior faculty. Our collaborative environment welcomes researchers 
+                at all career stages who share our passion for environmental modelling, data science, and AI/LLM-enabled systems — with a strong emphasis on teaching, training, and reproducible research.
+            </p>
+        </header>
+        
+        <section id="remit">
+            <h2>Remit & Themes</h2>
+            <p class="description">We bring together staff and students working across:</p>
+            <ul>
+                <li class="tooltip">
+                    <strong>Environmental modelling</strong> (process-based, statistical, hybrid)
+                    <span class="tooltip-text">Building and applying models to understand environmental systems, from physics-based simulations to data-driven approaches</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Data science & analytics</strong> (methods, workflows, reproducibility)
+                    <span class="tooltip-text">Developing robust analytical pipelines and methods for processing, analyzing, and visualizing environmental data</span>
+                </li>
+                <li class="tooltip">
+                    <strong>AI & LLM-enabled systems</strong> (tools for analysis, synthesis, decision support)
+                    <span class="tooltip-text">Leveraging large language models and AI tools to accelerate research, synthesize information, and support decision-making</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Data/AI systems</strong> (pipelines, evaluation, infrastructure, open resources)
+                    <span class="tooltip-text">Building the technical infrastructure and evaluation frameworks needed for reliable data and AI workflows</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Teaching & training</strong> (courses, short workshops, skills development)
+                    <span class="tooltip-text">Sharing knowledge and building capacity through courses, workshops, and hands-on training programs</span>
+                </li>
+            </ul>
+            
+            <p class="description" style="margin-top: 50px; margin-bottom: 20px;">Our research focuses on:</p>
+            <ul>
+                <li class="tooltip">
+                    <strong>Models & inference:</strong> calibration, uncertainty, emulation, scenarios
+                    <span class="tooltip-text">Improving how we fit models to data, quantify uncertainty, and use models for prediction and scenario analysis</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Data & methods:</strong> QA/QC, integration, spatiotemporal methods
+                    <span class="tooltip-text">Ensuring data quality, combining diverse data sources, and developing methods for spatial and temporal analysis</span>
+                </li>
+                <li class="tooltip">
+                    <strong>AI systems:</strong> LLM tooling, retrieval, evaluation, human-in-the-loop workflows
+                    <span class="tooltip-text">Creating practical AI systems that combine language models with domain expertise and human oversight</span>
+                </li>
+                <li class="tooltip">
+                    <strong>Open research:</strong> reusable code, transparent methods, collaborative practice
+                    <span class="tooltip-text">Promoting transparency and reproducibility through open-source code, clear documentation, and collaborative approaches</span>
+                </li>
+            </ul>
+        </section>
+        
+        <section id="people">
+            <h2>People</h2>
+            <p class="description">
+                Our group brings together faculty, postdoctoral researchers, and PhD students from diverse backgrounds 
+                in environmental science, data science, computer science, and engineering. Meet the people driving our research forward.
+            </p>
+            <p class="description" style="margin-top: 15px;">
+                <a href="people.html" style="font-size: 1.1rem; font-weight: 600;">View our team →</a>
+            </p>
+        </section>
+        
+        <section id="seminars">
+            <h2>Seminars & Events</h2>
+            <p class="description" style="margin-bottom: 30px;">
+                Join us for seminars, workshops, and events featuring speakers from our group and invited guests. 
+                All are welcome!
+            </p>
+            
+            <!-- Events will be automatically generated here from events.yml -->
+            <div id="events-container">
+                <p style="color: rgba(238, 241, 245, 0.6); font-style: italic;">
+                    No upcoming events scheduled. Check back soon!
+                </p>
+            </div>
+        </section>
+        
+        <section id="teaching">
+            <h2>Teaching & Training</h2>
+            <p class="description">
+                Our group members contribute to teaching across undergraduate and postgraduate programmes in the 
+                Department of Earth and Environmental Sciences. We are involved in delivering courses on environmental 
+                data science, modelling, and computational methods.
+            </p>
+            
+            <div style="margin-top: 30px;">
+                <h3 style="font-size: 1.3rem; color: var(--electric); margin-bottom: 15px;">Degree Programmes</h3>
+                <ul>
+                    <li><a href="https://www.manchester.ac.uk/study/undergraduate/courses/2025/00560/bsc-environmental-science/" target="_blank">BSc Environmental Science</a></li>
+                    <li><a href="https://www.manchester.ac.uk/study/masters/courses/list/09372/msc-environmental-monitoring-modelling-and-management/" target="_blank">MSc Environmental Monitoring, Modelling and Management</a></li>
+                    <li><a href="#">Add other relevant programmes</a></li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3 style="font-size: 1.3rem; color: var(--electric); margin-bottom: 15px;">Code & Resources</h3>
+                <p>Teaching materials and code examples are available on our <a href="https://github.com/environmental-ai-systems" target="_blank">GitHub organization</a>.</p>
+            </div>
+        </section>
+        
+        <section id="projects" class="resources-section">
+            <h2>Projects & Resources</h2>
+            <div class="code-block">
+                <span style="color: var(--electric);">GitHub organisation:</span> <a href="https://github.com/environmental-ai-systems" target="_blank">https://github.com/environmental-ai-systems</a>
+            </div>
+            <p style="margin-top: 30px; margin-bottom: 15px; font-weight: 500;">Example repositories:</p>
+            <ul>
+                <li>(add repo) — one-line description</li>
+                <li>(add repo) — one-line description</li>
+            </ul>
+        </section>
+        
+        <section id="work-with-us">
+            <h2>Work With Us</h2>
+            
+            <div style="margin-top: 40px;">
+                <h3 style="font-size: 1.6rem; color: var(--electric); margin-bottom: 20px;">PhD Opportunities</h3>
+                <ul>
+                    <li><a href="#">Propose a PhD project</a> - Information on developing your own research ideas or applying to advertised projects</li>
+                    <li><a href="#">Funded PhD schemes</a> - NERC, EPSRC, and other doctoral training programs</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 50px;">
+                <h3 style="font-size: 1.6rem; color: var(--electric); margin-bottom: 20px;">Postdoctoral & Fellowship Opportunities</h3>
+                <ul>
+                    <li><a href="#">Postdoc positions</a> - Current openings and how to express interest</li>
+                    <li><a href="#">Fellowship schemes</a> - Marie Skłodowska-Curie, Royal Society, Leverhulme Trust, and other opportunities</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 50px;">
+                <h3 style="font-size: 1.6rem; color: var(--electric); margin-bottom: 20px;">Visiting Researchers</h3>
+                <ul>
+                    <li><a href="#">Academic visitors program</a> - Spend time collaborating with our research group</li>
+                    <li><a href="#">Sabbatical opportunities</a> - Information for faculty on sabbatical visits</li>
+                    <li><a href="#">Short-term research visits</a> - 1-6 month research exchanges</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 50px;">
+                <h3 style="font-size: 1.6rem; color: var(--electric); margin-bottom: 20px;">Student Projects and Masters Programmes</h3>
+                <ul>
+                    <li><a href="#">MSc dissertation projects</a> - Available projects for Masters students</li>
+                </ul>
+            </div>
+            
+            <div style="margin-top: 50px; padding: 30px; background: rgba(22, 33, 62, 0.6); border-left: 4px solid var(--electric); border-radius: 8px;">
+                <h3 style="font-size: 1.4rem; color: var(--electric); margin-bottom: 15px;">Get in Touch</h3>
+                <p style="margin-bottom: 10px;">Interested in working with us? We'd love to hear from you.</p>
+                <p>Email: <a href="/cdn-cgi/l/email-protection#01626e6f75606275416479606c716d642f60622f746a" style="font-family: 'JetBrains Mono', monospace;"><span class="__cf_email__" data-cfemail="98fbf7f6ecf9fbecd8fde0f9f5e8f4fdb6f9fbb6edf3">[email&#160;protected]</span></a></p>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-content">
+                <h3>Contact Us</h3>
+                <p class="footer-location">
+                    <strong>Department of Earth and Environmental Sciences</strong><br>
+                    The University of Manchester<br>
+                    Manchester, United Kingdom
+                </p>
+                <p class="footer-email">
+                    Email: <a href="/cdn-cgi/l/email-protection#7a1915140e1b190e3a1f021b170a161f541b19540f11"><span class="__cf_email__" data-cfemail="d4b7bbbaa0b5b7a094b1acb5b9a4b8b1fab5b7faa1bf">[email&#160;protected]</span></a>
+                </p>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/environmental-ai-systems" target="_blank">GitHub</a>
+                <span class="divider">•</span>
+                <a href="https://www.manchester.ac.uk/discover/maps/" target="_blank">Campus Map</a>
+                <span class="divider">•</span>
+                <a href="https://www.ess.manchester.ac.uk" target="_blank">Department Website</a>
+            </div>
+            <div class="footer-bottom">
+                        <p>&copy; 2026 Environmental Modelling, Data & AI Systems Group</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
+        
+        // Highlight active section in nav
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id], header[id]');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link 
