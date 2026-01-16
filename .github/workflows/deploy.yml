@@ -1,0 +1,58 @@
+name: Build and Deploy
+
+on:
+  # Trigger when you push to main branch
+  push:
+    branches: [ main ]
+  
+  # Trigger when the private repo is updated (you'll set up a webhook for this)
+  repository_dispatch:
+    types: [people-data-updated]
+  
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout public repo
+      uses: actions/checkout@v4
+      
+    - name: Checkout private people data
+      uses: actions/checkout@v4
+      with:
+        repository: environmental-ai-systems/environmental-ai-systems-private
+        token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        path: private-data
+    
+    - name: Copy people data
+      run: |
+        mkdir -p _data
+        cp private-data/people.yml _data/people.yml
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install pyyaml
+    
+    - name: Generate people.html from YAML
+      run: |
+        python generate_people_page.py
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: gh-pages
