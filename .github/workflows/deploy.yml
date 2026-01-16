@@ -24,6 +24,8 @@ jobs:
     steps:
     - name: Checkout public repo
       uses: actions/checkout@v4
+      with:
+        ref: main
       
     - name: Checkout private people data
       uses: actions/checkout@v4
